@@ -1,0 +1,4 @@
+<svg baseProfile="full" height="444.4px" version="1.1" viewBox="-4.700000000000003 -50.7 752.4 444.4" width="752.4px" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css"><![CDATA[.geometry { stroke: black; stroke-width: 1; fill: none }
+.text { font-family: Arial, sans-serif; font-size: 12; fill: black }
+.annotations { stroke: blue; stroke-width: 0.5; fill: blue; opacity: 0.7 }
+.debug { stroke: red; stroke-width: 0.5; stroke-dasharray: 2,2; opacity: 0.3 }]]></style></defs><g class="background" id="background_layer" /><g class="geometry" id="geometry_layer" /><g class="text" id="text_layer" /><g class="annotations" id="annotations_layer" /><g class="debug" id="debug_layer" /><g><text style="font-size:12px;fill:gray" x="10" y="20">Mathematical Diagram - Precise SVG</text></g><g id="metadata" style="display: none" /></svg>

@@ -4,7 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-ImageToSvg is a Python-based mathematical diagram vectorization tool that converts mathematical figures (geometry diagrams, charts) from raster images to high-quality SVG vector graphics. The project uses the Potrace vectorization engine for precise line extraction and mathematical shape recognition.
+ImageToSvg is a precision mathematical diagram SVG conversion system that transforms mathematical figures and geometry diagrams from raster images into mathematically accurate SVG vector graphics. The system uses a sophisticated 4-layer architecture with advanced computer vision, OCR, constraint solving, and semantic analysis to generate true geometric primitives instead of path-based approximations.
+
+**Key Features:**
+- Hybrid geometry detection using multiple algorithms (contour analysis, Hough transforms, template matching)
+- Multi-engine OCR system with mathematical symbol recognition
+- CAD-style geometric constraint solving
+- Mathematical semantic analysis and scene understanding
+- Precise SVG generation with true geometric primitives
+- End-to-end conversion pipeline with confidence scoring
 
 ## Development Environment
 
@@ -17,13 +25,15 @@ ImageToSvg is a Python-based mathematical diagram vectorization tool that conver
 - **Image Processing**: OpenCV, PIL/Pillow, scikit-image
 - **OCR**: EasyOCR, PyTesseract, Tesseract
 - **SVG Generation**: svgwrite
-- **Automation**: autopy
-- **Math/Array**: numpy
+- **Mathematical Computing**: numpy, scipy
+- **Graph Analysis**: networkx
+- **Constraint Solving**: cvxpy, cvxopt (optional)
+- **Testing**: pytest, unittest
 
-### External Dependencies
-- **Potrace**: Must be installed system-wide and available in PATH
-  - Used for professional-grade bitmap to vector conversion
-  - Critical for the tool's core functionality
+### Optional Dependencies
+- **GUI**: tkinter, PyQt5
+- **Performance**: joblib, multiprocessing
+- **Development**: black, flake8, mypy
 
 ## Development Commands
 
@@ -41,72 +51,185 @@ pip install -e .
 
 ### Running the Tool
 ```bash
-# Run the main conversion tool
-python potrace_image_to_svg.py
+# Run the main precision SVG converter
+python precise_math_svg_converter.py input_image.png -o output.svg
 
-# Or execute directly (if executable)
-./potrace_image_to_svg.py
+# Run with intermediate result saving
+python precise_math_svg_converter.py input_image.png -o output.svg --save-intermediates
+
+# Run examples and demonstrations
+python example_usage.py
+
+# Batch conversion
+python -c "from precise_math_svg_converter import PreciseMathSVGConverter; converter = PreciseMathSVGConverter(); converter.convert_batch(['img1.png', 'img2.png'], 'output_dir')"
 ```
 
 ### Testing
-Check for potrace installation before running:
 ```bash
-potrace --version
+# Run comprehensive test suite
+python test_framework.py -o test_results.json
+
+# Run specific component tests
+python -m pytest test_framework.py::ComponentTester -v
+
+# Install additional dependencies for full testing
+pip install -r requirements.txt
 ```
 
 ## Code Architecture
 
+### 4-Layer Architecture System
+
+The system implements a sophisticated 4-layer architecture for precise mathematical diagram conversion:
+
+#### Layer 1: Detection and Recognition
+- **HybridGeometryDetector** (`geometry_detector.py`): Multi-algorithm geometry detection
+  - ContourBasedDetector: Contour analysis with Douglas-Peucker approximation
+  - HoughBasedDetector: Line and circle detection using Hough transforms
+  - TemplateMatchingDetector: Template-based shape recognition
+  - Consensus fusion mechanism for high-accuracy detection
+
+- **MathematicalOCR** (`mathematical_ocr.py`): Multi-engine text extraction
+  - EasyOCR and Tesseract integration
+  - Mathematical symbol recognition
+  - Geometry-guided text extraction
+  - Multi-engine result fusion
+
+#### Layer 2: Constraint Solving
+- **IncrementalConstraintSolver** (`constraint_solver.py`): CAD-style geometric constraints
+  - ParallelConstraint, PerpendicularConstraint, IntersectionConstraint
+  - Priority-based incremental solving
+  - Numerical optimization for constraint satisfaction
+  - Geometric relationship inference
+
+#### Layer 3: Semantic Analysis
+- **MathSemanticAnalyzer** (`math_semantic_analyzer.py`): Scene understanding
+  - Mathematical pattern recognition
+  - Scene graph construction using NetworkX
+  - Geometry-text binding and relationship analysis
+  - Context-aware mathematical interpretation
+
+#### Layer 4: SVG Generation
+- **PreciseSVGGenerator** (`precise_svg_generator.py`): Mathematical precision output
+  - True geometric primitives (not path approximations)
+  - Coordinate optimization and precision control
+  - Layered SVG structure with validation
+  - Mathematical metadata preservation
+
 ### Core Components
 
-#### Main Converter (`potrace_image_to_svg.py`)
-- **PotraceMathImageToSVG**: Main class handling the conversion pipeline
-  - Image preprocessing with mathematical optimization
-  - Potrace integration with specialized parameters
-  - SVG post-processing and optimization
+#### Main Converter (`precise_math_svg_converter.py`)
+- **PreciseMathSVGConverter**: Main orchestrator class
+  - `convert_image_to_svg()`: End-to-end conversion pipeline
+  - `convert_batch()`: Batch processing with progress tracking
+  - Intermediate result saving and confidence scoring
+  - Comprehensive error handling and logging
 
-#### Key Methods
-- `preprocess_image_for_potrace()`: Converts images to high-quality bitmaps using Otsu thresholding
-- `run_potrace()`: Executes potrace with mathematical diagram-optimized parameters
-- `batch_convert()`: Processes all images in input_image/ directory
+#### Configuration System (`math_config.py`)
+- **MathConfig**: Centralized configuration management
+  - GeometryDetectionConfig: Detection algorithm parameters
+  - OCRConfig: Multi-engine OCR settings
+  - ConstraintSolverConfig: Constraint solving parameters
+  - SVGGenerationConfig: Output precision and formatting
 
-#### Directory Structure
-- `input_image/`: Source mathematical diagrams (PNG, JPG, BMP, TIFF)
-- `output_svg/`: Generated SVG vector files
-- `dist/`: Build artifacts
-- `.venv/`: Python virtual environment
+#### Geometric Primitives (`geometry_primitives.py`)
+- **GeometryPrimitive**: Abstract base class for geometric elements
+  - Point, Line, Circle, Triangle, Rectangle, Polygon classes
+  - Precise distance calculations and geometric relationships
+  - Bounding box computation and intersection testing
 
-### Potrace Configuration
-The tool uses specialized potrace parameters optimized for mathematical diagrams:
-- `--tight`: Tight bounding boxes
-- `--turnpolicy black`: Prefer black pixels for path decisions
-- `--turdsize 2`: Minimum feature size in pixels
-- `--alphamax 1.0`: Corner angle threshold
-- `--opttolerance 0.2`: Optimization tolerance
+### File Structure
 
-## Future Architecture (Redesign Plan)
+#### Core System Files
+- `precise_math_svg_converter.py`: Main conversion pipeline
+- `math_config.py`: Configuration system
+- `geometry_primitives.py`: Geometric primitive definitions
+- `geometry_detector.py`: Layer 1 - Geometry detection
+- `mathematical_ocr.py`: Layer 1 - OCR and text recognition  
+- `constraint_solver.py`: Layer 2 - Constraint solving
+- `math_semantic_analyzer.py`: Layer 3 - Semantic analysis
+- `precise_svg_generator.py`: Layer 4 - SVG generation
 
-The codebase includes a redesign plan document (`精确数学配图SVG转换系统重设计方案.md`) outlining a 4-layer architecture:
+#### Testing and Validation
+- `test_framework.py`: Comprehensive testing framework
+- `example_usage.py`: Usage examples and demonstrations
 
-1. **GeometryPrimitiveDetector**: High-level geometric shape detection
-2. **ConstraintSolver**: Geometric constraint reasoning engine
-3. **MathSemanticAnalyzer**: Mathematical semantics understanding
-4. **PreciseSVGReconstructor**: Precise SVG generation with mathematical accuracy
+#### Configuration and Documentation
+- `requirements.txt`: Complete dependency specifications
+- `pyproject.toml`: Package configuration
+- `精确数学配图SVG转换系统重设计方案.md`: Design document (Chinese)
+
+### Data Flow
+
+1. **Image Input** → Image preprocessing and enhancement
+2. **Layer 1** → Geometry detection + OCR text extraction  
+3. **Layer 2** → Constraint solving and geometric refinement
+4. **Layer 3** → Semantic analysis and scene understanding
+5. **Layer 4** → Precise SVG generation with true primitives
+6. **Output** → Mathematically accurate SVG with metadata
 
 ## Working with Images
 
-The tool expects mathematical diagrams containing:
-- Geometric shapes (triangles, rectangles, circles)
-- Mathematical annotations and labels
-- Line drawings and technical diagrams
+### Supported Input Types
+The system handles various mathematical diagrams:
+- **Geometric figures**: Triangles, rectangles, circles, polygons, lines
+- **Mathematical annotations**: Labels, equations, symbols, coordinates
+- **Technical diagrams**: Engineering drawings, charts, graphs
+- **Educational content**: Textbook diagrams, problem illustrations
 
-Input images are preprocessed with:
-- Contrast enhancement
-- Otsu thresholding for optimal binarization
-- Format conversion to Potrace-compatible bitmaps
+### Image Preprocessing
+- **Adaptive enhancement**: CLAHE histogram equalization
+- **Noise reduction**: Gaussian filtering and morphological operations
+- **Multi-format support**: PNG, JPG, BMP, TIFF input formats
+- **Quality optimization**: Automatic contrast and brightness adjustment
 
-## Common Issues
+### Output Quality
+- **True geometric primitives**: Circles as `<circle>`, rectangles as `<rect>` (not path approximations)
+- **Mathematical precision**: Configurable coordinate precision (default: 3 decimal places)
+- **Semantic preservation**: Text-geometry relationships maintained
+- **Scalable output**: Vector graphics with infinite zoom capability
 
-- Ensure potrace is installed and in system PATH
-- Input images should be clear with good contrast
-- Mathematical diagrams work best with black lines on white background
-- Large images may require timeout adjustments in subprocess calls
+## Usage Patterns
+
+### Basic Conversion
+```python
+from precise_math_svg_converter import PreciseMathSVGConverter
+
+converter = PreciseMathSVGConverter()
+result = converter.convert_image_to_svg("diagram.png", "output.svg")
+print(f"Success: {result.success}, Confidence: {result.confidence_score:.2%}")
+```
+
+### Advanced Usage with Configuration
+```python
+from math_config import MathConfig
+
+config = MathConfig()
+config.geometry_detection.algorithms = ['contour', 'hough', 'template']
+config.ocr.engines = ['easyocr', 'tesseract']
+config.svg_generation.coordinate_precision = 4
+
+converter = PreciseMathSVGConverter(config)
+```
+
+## Common Issues and Solutions
+
+### OCR Dependencies
+- **EasyOCR installation**: May require CUDA for GPU acceleration
+- **Tesseract setup**: Ensure tesseract is in system PATH
+- **Fallback behavior**: System gracefully degrades if OCR engines unavailable
+
+### Performance Optimization
+- **Memory usage**: Large images may require chunked processing
+- **Processing time**: Complex diagrams with many constraints take longer
+- **Batch processing**: Use `convert_batch()` for multiple images
+
+### Quality Issues
+- **Low contrast images**: Use `config.preprocessing.apply_enhancement = True`
+- **Complex diagrams**: Increase detection thresholds for better accuracy
+- **Text recognition**: Ensure text is clear and not too small
+
+### Troubleshooting
+- **Check dependencies**: Run `python example_usage.py` to verify setup
+- **Debug mode**: Use `save_intermediates=True` to inspect processing stages
+- **Confidence scores**: Low scores (<0.5) indicate potential quality issues
