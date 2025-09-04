@@ -11,7 +11,7 @@ keywords = ["svg", "image processing", "ocr", "geometry"]
 
 dependencies = [
     "opencv-python>=4.11.0",
-    "numpy>=2.0",
+    "numpy>=1.0",
     "scikit-image>=0.21.0",
     "svgwrite>=1.4.3",
     "networkx>=3.0",
