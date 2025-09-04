@@ -1,19 +1,56 @@
 [project]
 name = "imagetosvg"
 version = "0.1.0"
-description = "Add your description here"
-requires-python = ">=3.12"
-dependencies = [
-    "autopy>=4.0.1",
-    "easyocr>=1.7.2",
-    "networkx>=3.5",
-    "numpy>=2.3.2",
-    "opencv-python>=4.11.0.86",
-    "opencv-python-headless>=4.11.0.86",
-    "pillow>=11.3.0",
-    "pytesseract>=0.3.13",
-    "scikit-image>=0.25.2",
-    "scipy>=1.16.1",
-    "svgwrite>=1.4.3",
-    "tesseract>=0.1.3",
+description = "A precise mathematical diagram conversion tool from image to SVG."
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    { name = "Your Name", email = "you@example.com" }
 ]
+keywords = ["svg", "image processing", "ocr", "geometry"]
+
+dependencies = [
+    "opencv-python>=4.11.0",
+    "numpy>=2.0",
+    "scikit-image>=0.21.0",
+    "svgwrite>=1.4.3",
+    "networkx>=3.0",
+    "pillow>=10.0.0",
+    "scipy>=1.11.0",
+    "easyocr>=1.7.0",
+    "pytesseract>=0.3.10",
+    "matplotlib>=3.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+    "ipython>=8.0.0",
+    "jupyter>=1.0.0",
+    "notebook>=7.0.0",
+]
+docs = [
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=1.3.0",
+]
+gui = [
+    "pyqt5>=5.15.0",
+]
+full = [
+    "imagetosvg[dev,docs,gui]",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["input_image*", "output_svg*", "tests*", "docs*"]
+
+[tool.setuptools.package-data]
+imagetosvg = ["*.yaml", "*.yml", "*.json"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
